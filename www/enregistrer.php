@@ -22,6 +22,9 @@ $req->execute([
 ]);
 
 echo(json_encode([
-    'created_id' => $pdo->lastInsertId()
+    'id' => $pdo->lastInsertId(),
+    'date_envoi' => $date,
+    'auteur' => $auteur,
+    'contenu' => $contenu
 ]));
 die();

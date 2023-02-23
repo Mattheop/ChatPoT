@@ -22,7 +22,7 @@ $req->execute([
 ]);
 
 echo(json_encode([
-    'id' => $pdo->lastInsertId(),
+    'id' => intval($pdo->lastInsertId()),
     'date_envoi' => $date,
     'auteur' => $auteur,
     'contenu' => $contenu

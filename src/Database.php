@@ -1,4 +1,5 @@
 <?php
+
 class Database
 {
     private static ?self $instance = null;
@@ -11,7 +12,12 @@ class Database
      */
     private function __construct()
     {
-        $this->PDOInstance = new PDO('mysql:dbname=chatpoT;host=localhost', 'root', '');
+        $DB_NAME = $_ENV['DB_NAME'] ?? 'chatpot';
+        $DB_HOST = $_ENV['DB_HOST'] ?? 'localhost';
+        $DB_USER = $_ENV['DB_USER'] ?? 'root';
+        $DB_PASS = $_ENV['DB_PASS'] ?? '';
+
+        $this->PDOInstance = new PDO('mysql:dbname=' . $DB_NAME . ';host=' . $DB_HOST . ';charset=utf8', $DB_USER, $DB_PASS);
         $this->PDOInstance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
         $this->PDOInstance->query('SET NAMES utf8');
         $this->PDOInstance->query('SET CHARACTER SET utf8');

@@ -40,6 +40,11 @@ $user = $_SESSION['user']['username'];
                 <p>General</p>
             </div>
         </div>
+
+        <div class="alives-containers">
+            <h4><span id="alives-count">0</span> Personnes connectées</h4>
+            <div id="alives-list"></div>
+        </div>
     </nav>
 
 

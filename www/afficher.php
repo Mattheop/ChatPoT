@@ -54,7 +54,7 @@ $user = $_SESSION['user']['username'];
         </div>
         <form class="conversation-footer" id="message-form" action="">
             <input type="hidden" id="name" value="<?= $user ?>">
-            <input id="message" type="text" placeholder="Tapez ici">
+            <input id="message" type="text" placeholder="Tapez ici" maxlength="255">
             <button type="submit">
                 ChatPoTer
                 <i class="las la-paw"></i>

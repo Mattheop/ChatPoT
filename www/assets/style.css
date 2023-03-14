@@ -124,6 +124,7 @@ main {
     padding: 2rem 1rem;
     gap: 2.6rem 2rem;
     overflow-y: scroll;
+    scroll-behavior: smooth;
     max-height: 80vh;
 }
 

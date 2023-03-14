@@ -22,7 +22,6 @@ $(() => {
         });
 
         messagesIds.push(parseInt(message.id));
-        console.log(messagesIds);
         conversation.append($(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
             <p class="message-author">${message.auteur}</p>
             <p class="message-content">${message.contenu}</p>

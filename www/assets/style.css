@@ -45,7 +45,7 @@ main {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    padding: 1rem 1rem;
+    padding: .5rem 1rem;
     border-radius: var(--radius);
     cursor: pointer;
 }
@@ -122,7 +122,9 @@ main {
     flex-direction: column;
     box-sizing: border-box;
     padding: 2rem 1rem;
-    gap: 2rem;
+    gap: 2.6rem 2rem;
+    overflow-y: scroll;
+    max-height: 80vh;
 }
 
 .message {
@@ -133,6 +135,31 @@ main {
     border-radius: var(--radius);
     background-color: var(--secondary-color);
     max-width: 550px;
+    position: relative;
+}
+
+.message .message-author {
+    position: absolute;
+    left: 1rem;
+    top: calc(-1rem - 4px);
+    margin-bottom: 8px;
+    color: gray;
+    font-size: 0.80rem;
+}
+
+.message .message-time {
+    position: absolute;
+    right: 1rem;
+    bottom: calc(-1rem - 4px);
+    color: gray;
+    text-align: right;
+    font-size: 0.70rem;
+}
+
+.message p {
+    margin: 0;
+    padding: 0;
+
 }
 
 .message.me {

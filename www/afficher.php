@@ -1,11 +1,13 @@
 <?php
+session_start();
 
-if (empty($_GET['user'])) {
+
+if (empty($_SESSION['user'])) {
     header("Location: login.php");
     die();
 }
 
-$user = $_GET['user'];
+$user = $_SESSION['user']['username'];
 
 ?>
 <!doctype html>
@@ -42,7 +44,7 @@ $user = $_GET['user'];
 
 
     <aside class="conversation-container">
-        <div class="conversation-header">Bonjour <strong><?= $user ?></strong></div>
+        <div class="conversation-header">Bonjour <strong><?= $user ?></strong>, <a href="login.php?logout">Se déconnecter</a></div>
         <div class="conversation-body" id="conversation-body">
         </div>
         <form class="conversation-footer" id="message-form" action="">

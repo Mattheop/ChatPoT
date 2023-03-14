@@ -25,11 +25,18 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
 
     // Si le compte n'existe pas on le créé
     if (is_bool($userFind) && $userFind === false) {
-        $req = $pdo->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
-        $req->execute([
+        $params = [
             'username' => htmlspecialchars($_POST['user']),
             'password' => password_hash($_POST['pass'], PASSWORD_BCRYPT)
-        ]);
+        ];
+        $req = $pdo->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
+        $req->execute($params);
+
+        if($req->rowCount() > 0){
+            $_SESSION['user'] = $params;
+            header('Location: afficher.php');
+            die();
+        }
     } else {
         // Sinon on vérifie le mot de passe
         if (!password_verify($_POST['pass'], $userFind['password'])) {
@@ -84,7 +91,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
             <form action="" method="post">
                 <div class="form-group">
                     <label for="user">Saisir un nom</label>
-                    <input id="user" type="text" name="user" placeholder="John Doe" value="<?= $userFind['username'] ?? "" ?>">
+                    <input id="user" maxlength="30" type="text" name="user" placeholder="John Doe" value="<?= $userFind['username'] ?? "" ?>">
                 </div>
 
 

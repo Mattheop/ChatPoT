@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<form action="/" method="get">
+<form action="afficher.php" method="get">
     <label>
         Saisir le nom
         <input type="text" name="user" placeholder="Entrez un nom">

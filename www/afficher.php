@@ -16,10 +16,11 @@
             const messagesIds = [];
 
             const renderMessage = (message) => {
-                if(messagesIds.includes(message.id)){
+                if(messagesIds.includes(parseInt(message.id))){
                     return;
                 }
-                messagesIds.push(message.id);
+                messagesIds.push(parseInt(message.id));
+                console.log(messagesIds)
                 conversation.append($(`<li data-chat-id='${message.id}'>${message.contenu}</li>`));
             }
 

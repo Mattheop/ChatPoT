@@ -1,0 +1,24 @@
+# Used for dev environment
+version: '3.9'
+services:
+  chatpot_web:
+    ports:
+      - '85:80'
+    environment:
+      DB_NAME: 'chatpot'
+      DB_HOST: 'chatpot_db'
+      DB_USER: 'root'
+      DB_PASS: ''
+    volumes:
+      - ./../:/var/www/html
+  chatpot_db:
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: ''
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      MYSQL_DATABASE: 'chatpot'
+    volumes:
+      - dbData:/var/lib/mysql
+volumes:
+  dbData:

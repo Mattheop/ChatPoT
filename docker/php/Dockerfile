@@ -10,5 +10,6 @@ RUN apt-get update -qq && \
 
 RUN a2enmod rewrite
 
-COPY conf/php.ini /usr/local/etc/php/conf.d/app.ini
-COPY conf/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY docker/php/conf/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY docker/php/conf/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY ./ /var/www/html

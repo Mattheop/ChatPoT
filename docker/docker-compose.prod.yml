@@ -1,0 +1,19 @@
+# Used for prod environment
+version: '3.9'
+services:
+  chatpot_web:
+    ports:
+      - '80:80'
+    environment:
+      DB_NAME: 'chatpot'
+      DB_HOST: 'chatpot_db'
+      DB_USER: 'root'
+      DB_PASS: '${DB_PASS}'
+  chatpot_db:
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASS}'
+      MYSQL_DATABASE: 'chatpot'
+    volumes:
+      - dbData:/var/lib/mysql
+volumes:
+  dbData:

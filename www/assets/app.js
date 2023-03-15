@@ -6,11 +6,12 @@ $(() => {
     const alivesCount = $("#alives-count")
     const alivesList = $("#alives-list")
     const user = nameInput.val()
+    const roomContainer = $("#room-container")
 
-    const messagesIds = []
+    const alreadyRenderedMessagesIds = []
 
     const renderMessage = (message) => {
-        if (messagesIds.includes(parseInt(message.id))) {
+        if (alreadyRenderedMessagesIds.includes(parseInt(message.id))) {
             return
         }
         const date = new Date(Date.parse(message.date_envoi))
@@ -23,7 +24,7 @@ $(() => {
             timeStyle: "short",
         })
 
-        messagesIds.push(parseInt(message.id))
+        alreadyRenderedMessagesIds.push(parseInt(message.id))
         conversation.append($(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
             <p class="message-author">${message.auteur}</p>
             <p class="message-content">${message.contenu}</p>
@@ -33,10 +34,13 @@ $(() => {
         conversation.scrollTop(conversation.prop("scrollHeight"))
     }
 
-    const fetchMessages = () => {
+    const fetchMessages = (roomID) => {
         $.ajax({
             url: "./recuperer.php",
-            method: "GET"
+            method: "GET",
+            data: {
+                room_id: roomID ?? roomContainer.find(".active").data("room-id")
+            }
         }).done((response) => {
             const messages = JSON.parse(response).data;
             messages.forEach(renderMessage);
@@ -46,7 +50,7 @@ $(() => {
     const renderAlives = (alives) => {
         // ajout des nouveaux vivants
         alives.forEach((alive) => {
-            if(alivesList.find(`[data-username="${alive.username}"]`).length > 0) {
+            if (alivesList.find(`[data-username="${alive.username}"]`).length > 0) {
                 return;
             }
 
@@ -59,7 +63,7 @@ $(() => {
         // suppression des morts
         alivesList.find(".alive").each((index, alive) => {
             const aliveUsername = $(alive).data("username");
-            if(!alives.find((alive) => alive.username === aliveUsername)) {
+            if (!alives.find((alive) => alive.username === aliveUsername)) {
                 $(alive).remove();
             }
         });
@@ -74,6 +78,18 @@ $(() => {
 
             renderAlives(alives.users)
         })
+    }
+
+    const roomClickHandler = (event) => {
+        const roomElement = $(event.currentTarget);
+        const roomId = roomElement.data("room-id");
+
+        roomContainer.find(".active").removeClass("active");
+        roomElement.addClass("active");
+
+        conversation.empty();
+        alreadyRenderedMessagesIds.length = 0;
+        fetchMessages(roomId);
     }
 
     messageForm.submit((event) => {
@@ -96,7 +112,8 @@ $(() => {
             method: "GET",
             data: {
                 auteur,
-                contenu
+                contenu,
+                room_id: roomContainer.find(".active").data("room-id")
             }
         }).done((response) => {
             const message = JSON.parse(response);
@@ -105,9 +122,27 @@ $(() => {
         });
     })
 
-    setInterval(fetchMessages, 2000)
-    setInterval(fecthAlives, 5000)
+    $.ajax({
+        url: "./rooms.php",
+        method: "GET",
+    }).done((response) => {
+        const payload = JSON.parse(response);
+        payload.rooms.forEach((room, index) => {
+            const roomElement = $(`<div class="room-item ${index === 0 ? 'active' : ''}" data-room-id="${room.id}">
+                <img src="https://ui-avatars.com/api/?bold=true&name=${room.name}&background=6A1B9A&color=F5F5F5" alt="">
+                <p>${room.name}</p>
+            </div>`);
 
-    fetchMessages()
-    fecthAlives()
+            roomElement.click(roomClickHandler)
+            roomContainer.append(roomElement);
+        });
+
+        // on commence à récupérer les messages de la room active (ici la première)
+        fetchMessages();
+        setInterval(fetchMessages, 2000);
+    });
+
+    // On récupère les connectés
+    setInterval(fecthAlives, 5000);
+    fecthAlives();
 })

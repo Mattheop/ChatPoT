@@ -48,11 +48,7 @@ if (isset($_SESSION['user']['created']) && $_SESSION['user']['created'] === true
         <div class="sidebar-header">
             <img src="assets/images/large-logo.png" alt="">
         </div>
-        <div class="room-container">
-            <div class="room-item active">
-                <img src="https://ui-avatars.com/api/?bold=true&name=General&background=6A1B9A&color=F5F5F5" alt="">
-                <p>General</p>
-            </div>
+        <div class="room-container" id="room-container">
         </div>
 
         <div class="alives-containers">

@@ -58,7 +58,9 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Se connecter</title>
+    <title>ChatPoT - Se connecter</title>
+
+    <meta name="theme-color" content="#11001C">
 
     <link rel="stylesheet" href="assets/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">

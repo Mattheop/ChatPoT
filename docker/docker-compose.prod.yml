@@ -5,7 +5,7 @@ services:
     restart: always
     build:
       context: './..'
-      dockerfile: './docker/mysql/Dockerfile-prod'
+      dockerfile: './docker/php/Dockerfile-prod'
     environment:
       DB_NAME: 'chatpot'
       DB_HOST: 'chatpot_db'

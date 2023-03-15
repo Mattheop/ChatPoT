@@ -2,8 +2,6 @@
 version: '3.9'
 services:
   chatpot_web:
-    ports:
-      - '80:80'
     environment:
       DB_NAME: 'chatpot'
       DB_HOST: 'chatpot_db'

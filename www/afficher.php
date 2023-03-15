@@ -6,7 +6,6 @@ if (empty($_SESSION['user'])) {
     header("Location: login.php");
     die();
 }
-
 $user = $_SESSION['user']['username'];
 
 ?>
@@ -25,9 +24,24 @@ $user = $_SESSION['user']['username'];
     <link rel="stylesheet"
           href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script defer src="assets/app.js"></script>
+
+    <script>
+        const modal = Swal.mixin({
+            iconColor: "#6A1B9A",
+            confirmButtonColor: "#3A015C",
+        })
+    </script>
 </head>
 <body>
+
+<?php
+if (isset($_SESSION['user']['created']) && $_SESSION['user']['created'] === true) {
+    unset($_SESSION['user']['created']);
+    echo "<script>modal.fire('Bienvenue', 'Votre compte a été créé automatique avec succès. vous pourrez vous reconnecter avec les identifiants utilisés pour retrouver votre session.', 'success')</script>";
+}
+?>
 
 <main class="main">
     <nav class="sidebar">
@@ -49,7 +63,8 @@ $user = $_SESSION['user']['username'];
 
 
     <aside class="conversation-container">
-        <div class="conversation-header">Bonjour <strong><?= $user ?></strong>, <a href="login.php?logout">Se déconnecter</a></div>
+        <div class="conversation-header">Bonjour <strong><?= $user ?></strong>, <a href="login.php?logout">Se
+                déconnecter</a></div>
         <div class="conversation-body" id="conversation-body">
         </div>
         <form class="conversation-footer" id="message-form" action="">

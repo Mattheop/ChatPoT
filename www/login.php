@@ -3,13 +3,13 @@ require_once '../src/Database.php';
 session_start();
 $pass_failed = false;
 
-if(isset($_GET['logout'])) {
+if (isset($_GET['logout'])) {
     session_destroy();
     header('Location: login.php');
     die();
 }
 
-if(!empty($_SESSION['user'])) {
+if (!empty($_SESSION['user'])) {
     header('Location: afficher.php');
     die();
 }
@@ -32,8 +32,8 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
         $req = $pdo->prepare("INSERT INTO users (username, password) VALUES (:username, :password)");
         $req->execute($params);
 
-        if($req->rowCount() > 0){
-            $_SESSION['user'] = $params;
+        if ($req->rowCount() > 0) {
+            $_SESSION['user'] = array_merge($params, ["created" => true]);
             header('Location: afficher.php');
             die();
         }
@@ -69,44 +69,45 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
 
 </head>
 <body>
-    <img id="background" src="assets/images/background.jpg" alt="">
+<img id="background" src="assets/images/background.jpg" alt="">
 
-    <main class="container">
-        <div id="form-login">
-            <img src="assets/images/large-logo.png" alt="">
-            <h1>Se connecter</h1>
+<main class="container">
+    <div id="form-login">
+        <img src="assets/images/large-logo.png" alt="">
+        <h1>Se connecter</h1>
 
-            <div class="notice">
-                <i class="las la-info-circle"></i>
-                <p>Si votre compte n'existe pas il sera automatiquement créé, n'oubliez pas votre mot de passe.</p>
+        <div class="notice">
+            <i class="las la-info-circle"></i>
+            <p>Si votre compte n'existe pas il sera automatiquement créé, n'oubliez pas votre mot de passe.</p>
+        </div>
+
+        <?php if ($pass_failed): ?>
+            <div class="notice notice-danger">
+                <i class="las la-exclamation-circle"></i>
+                <p>Le mot de passe est incorrect.</p>
+            </div>
+        <?php endif; ?>
+
+        <form action="" method="post">
+            <div class="form-group">
+                <label for="user">Saisir un nom</label>
+                <input id="user" maxlength="30" type="text" name="user" placeholder="John Doe"
+                       value="<?= $userFind['username'] ?? "" ?>">
             </div>
 
-            <?php if ($pass_failed): ?>
-                <div class="notice notice-danger">
-                    <i class="las la-exclamation-circle"></i>
-                    <p>Le mot de passe est incorrect.</p>
-                </div>
-            <?php endif; ?>
 
-            <form action="" method="post">
-                <div class="form-group">
-                    <label for="user">Saisir un nom</label>
-                    <input id="user" maxlength="30" type="text" name="user" placeholder="John Doe" value="<?= $userFind['username'] ?? "" ?>">
-                </div>
+            <div class="form-group">
+                <label for="pass">Saisir le mot de passe</label>
+                <input id="pass" type="password" name="pass" placeholder="Secret...">
+            </div>
 
-
-                <div class="form-group">
-                    <label for="pass">Saisir le mot de passe</label>
-                    <input id="pass" type="password" name="pass" placeholder="Secret...">
-                </div>
-
-                <button type="submit">
-                    Commencer à ChatPoTer !
-                    <i class="las la-paw"></i>
-                </button>
-            </form>
-        </div>
-    </main>
+            <button type="submit">
+                Commencer à ChatPoTer !
+                <i class="las la-paw"></i>
+            </button>
+        </form>
+    </div>
+</main>
 
 </body>
 </html>

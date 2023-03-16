@@ -141,6 +141,11 @@ a {
     position: relative;
 }
 
+#alives-list{
+    max-height: 100%;
+    overflow-y: auto;
+}
+
 .conversation-footer {
     box-sizing: border-box;
     padding: 1rem 1rem;
@@ -206,6 +211,10 @@ a {
     margin-bottom: 8px;
     color: gray;
     font-size: 0.80rem;
+}
+
+.message .message-content {
+    overflow-wrap: break-word;
 }
 
 .message .message-time {

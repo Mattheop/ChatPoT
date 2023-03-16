@@ -217,6 +217,12 @@ a {
     overflow-wrap: break-word;
 }
 
+.message .message-content iframe {
+    max-width: 100%;
+    height: 100%;
+    margin-bottom: 8px;
+}
+
 .message .message-time {
     position: absolute;
     right: 1rem;

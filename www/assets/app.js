@@ -12,26 +12,48 @@ $(() => {
 
     const renderMessage = (message) => {
         if (alreadyRenderedMessagesIds.includes(parseInt(message.id))) {
-            return
+            return;
         }
-        const date = new Date(Date.parse(message.date_envoi))
+        const date = new Date(Date.parse(message.date_envoi));
         const dateString = date.toLocaleDateString("fr-FR", {
             month: "numeric",
             day: "numeric",
-        })
+        });
 
         const hoursString = date.toLocaleTimeString("fr-FR", {
             timeStyle: "short",
-        })
+        });
 
-        alreadyRenderedMessagesIds.push(parseInt(message.id))
-        conversation.append($(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
+        let alreadyOneGif = false;
+
+        const formattedMessage =  message.contenu.split(" ").map((word) => {
+            if (word.startsWith("https://media.giphy.com/media/")) {
+                if(alreadyOneGif) {
+                    return "";
+                }
+                const idGif = word
+                    .replaceAll("https://media.giphy.com/media/", "")
+                    .replaceAll("/giphy.gif", "")
+                    .split("/").pop();
+                alreadyOneGif = true;
+                return `<iframe style="pointer-events: none;" src="https://giphy.com/embed/${idGif}" width="270" height="480" frameBorder="0" class="giphy-embed" allowFullScreen />`;
+            }
+            return `<p>${word}</p>`;
+        });
+
+        const formattedMessageElement = $(formattedMessage.join(" "));
+
+        alreadyRenderedMessagesIds.push(parseInt(message.id));
+
+        const messageElement = $(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
             <p class="message-author">${message.auteur}</p>
-            <p class="message-content">${message.contenu}</p>
+            <div class="message-content"></div>
             <p class="message-time">le ${dateString} à ${hoursString}</p>
-        </div>`))
+        </div>`);
+        messageElement.find(".message-content").append(formattedMessageElement);
+        conversation.append(messageElement);
 
-        conversation.scrollTop(conversation.prop("scrollHeight"))
+        conversation.scrollTop(conversation.prop("scrollHeight"));
     }
 
     const fetchMessages = (roomID) => {

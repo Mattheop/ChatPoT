@@ -139,10 +139,10 @@ $(() => {
 
         // on commence à récupérer les messages de la room active (ici la première)
         fetchMessages();
-        setInterval(fetchMessages, 2000);
+        setInterval(fetchMessages, 4000);
     });
 
     // On récupère les connectés
-    setInterval(fecthAlives, 5000);
+    setInterval(fecthAlives, 8000);
     fecthAlives();
 })

@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS chatpot.chat (
   id INT NOT NULL AUTO_INCREMENT,
   date_envoi DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   auteur VARCHAR(30) NOT NULL,
-  contenu VARCHAR(255) NOT NULL,
+  contenu TEXT NOT NULL,
   room_id INT NOT NULL,
   FOREIGN KEY (room_id) REFERENCES chatpot.rooms(id),
   PRIMARY KEY (id)

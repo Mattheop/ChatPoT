@@ -36,21 +36,18 @@ $(() => {
                     .replaceAll("/giphy.gif", "")
                     .split("/").pop();
                 alreadyOneGif = true;
-                return `<iframe style="pointer-events: none;" src="https://giphy.com/embed/${idGif}" width="270" height="480" frameBorder="0" class="giphy-embed" allowFullScreen />`;
+                return `<iframe style="pointer-events: none;" src="https://giphy.com/embed/${idGif}" allowFullScreen /> <br>`;
             }
-            return `<p>${word}</p>`;
+            return word;
         });
-
-        const formattedMessageElement = $(formattedMessage.join(" "));
 
         alreadyRenderedMessagesIds.push(parseInt(message.id));
 
         const messageElement = $(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
             <p class="message-author">${message.auteur}</p>
-            <div class="message-content"></div>
+            <div class="message-content">${formattedMessage.join(" ")}</div>
             <p class="message-time">le ${dateString} à ${hoursString}</p>
         </div>`);
-        messageElement.find(".message-content").append(formattedMessageElement);
         conversation.append(messageElement);
 
         conversation.scrollTop(conversation.prop("scrollHeight"));

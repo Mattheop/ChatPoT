@@ -1,12 +1,13 @@
 $(() => {
-    const conversation = $("#conversation-body")
-    const messageInput = $("#message")
-    const messageForm = $("#message-form")
-    const nameInput = $("#name")
-    const alivesCount = $("#alives-count")
-    const alivesList = $("#alives-list")
-    const user = nameInput.val()
-    const roomContainer = $("#room-container")
+    const conversation = $("#conversation-body");
+    const messageInput = $("#message");
+    const messageForm = $("#message-form");
+    const submitButton = $("#submit-button");
+    const nameInput = $("#name");
+    const alivesCount = $("#alives-count");
+    const alivesList = $("#alives-list");
+    const user = nameInput.val();
+    const roomContainer = $("#room-container");
 
     const alreadyRenderedMessagesIds = []
 
@@ -26,9 +27,9 @@ $(() => {
 
         let alreadyOneGif = false;
 
-        const formattedMessage =  message.contenu.split(" ").map((word) => {
+        const formattedMessage = message.contenu.split(" ").map((word) => {
             if (word.startsWith("https://media.giphy.com/media/")) {
-                if(alreadyOneGif) {
+                if (alreadyOneGif) {
                     return "";
                 }
                 const idGif = word
@@ -112,7 +113,12 @@ $(() => {
     }
 
     messageForm.submit((event) => {
-        event.preventDefault()
+        event.preventDefault();
+
+        messageInput.prop("disabled", true);
+        submitButton.prop("disabled", true);
+        submitButton.addClass("loading");
+
         if (nameInput.val().trim() === "") {
             window.alert("Rentre ton nom gros débile");
             return;
@@ -137,6 +143,14 @@ $(() => {
         }).done((response) => {
             const message = JSON.parse(response);
             renderMessage(message);
+            messageInput.val("");
+            nameInput.prop("disabled", false);
+        }).fail((error) => {
+            modal.fire("Erreur", "Un erreur de communication avec le serveur est servenue", "error")
+        }).always(() => {
+            messageInput.prop("disabled", false);
+            submitButton.removeClass("loading");
+            submitButton.prop("disabled", false);
             messageInput.val("");
         });
     })

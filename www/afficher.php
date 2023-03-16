@@ -67,8 +67,9 @@ if (isset($_SESSION['user']['created']) && $_SESSION['user']['created'] === true
         <form class="conversation-footer" id="message-form" action="">
             <input type="hidden" id="name" value="<?= $user ?>">
             <input id="message" type="text" placeholder="Tapez ici" maxlength="1024">
-            <button type="submit">
+            <button type="submit" id="submit-button" class="">
                 ChatPoTer
+                <div id="loading"></div>
                 <i class="las la-paw"></i>
             </button>
         </form>

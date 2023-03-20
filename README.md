@@ -42,3 +42,11 @@ docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 Dans cet environnement de production, les erreurs ne sont pas affichées sur la page mais dans les logs du service web.
 
 _Nb: Vous pouvez rajouter un fichier docker-compose pour lancer des services supplémentaires comme un reverse proxy ou bien ouvrir les ports du service chatpot_web._
+
+# Mettre à jour le serveur de production
+Vous pouvez utiliser git pour mettre à jour les sources...
+```bash
+git pull
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+```

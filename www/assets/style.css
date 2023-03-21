@@ -204,14 +204,18 @@ a {
     position: relative;
 }
 
+.message.me .message-author {
+    display: none;
+}
+
 .message .message-author {
     position: absolute;
-    left: min(1rem, 10%);
+    left: 0;
     top: calc(-1rem - 4px);
     margin-bottom: 8px;
     color: gray;
     font-size: 0.80rem;
-    max-width: calc(100% - 1rem);
+    max-width: 100%;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

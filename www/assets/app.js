@@ -44,10 +44,12 @@ $(() => {
 
         alreadyRenderedMessagesIds.push(parseInt(message.id));
 
+        const formattedDate = `le ${dateString} à ${hoursString}`;
+
         const messageElement = $(`<div data-chat-id='${message.id}' class="message ${user === message.auteur ? "me" : "other"}" >
-            <p class="message-author">${message.auteur}</p>
+            <p class="message-author" title="${message.auteur}">${message.auteur}</p>
             <div class="message-content">${formattedMessage.join(" ")}</div>
-            <p class="message-time">le ${dateString} à ${hoursString}</p>
+            <p class="message-time" title="${formattedDate}">${formattedDate}</p>
         </div>`);
         conversation.append(messageElement);
 

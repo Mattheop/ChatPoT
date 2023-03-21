@@ -197,7 +197,6 @@ a {
     align-self: flex-start;
     padding: 1rem;
     max-width: 60%;
-    min-width: max(20%, 200px);
     color: white;
     line-height: 1.2rem;
     border-radius: var(--radius);
@@ -212,6 +211,10 @@ a {
     margin-bottom: 8px;
     color: gray;
     font-size: 0.80rem;
+    max-width: calc(100% - 1rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .message .message-content {
@@ -228,11 +231,20 @@ a {
 
 .message .message-time {
     position: absolute;
-    right: 1rem;
+    right: min(1rem, 5%);
     bottom: calc(-1rem - 4px);
     color: gray;
     text-align: right;
     font-size: 0.70rem;
+    max-width: calc(100% - 1rem);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.message .message-time,
+.message .message-author {
+    cursor: default;
 }
 
 .message p {

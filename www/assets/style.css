@@ -206,7 +206,7 @@ a {
 
 .message .message-author {
     position: absolute;
-    left: 1rem;
+    left: min(1rem, 10%);
     top: calc(-1rem - 4px);
     margin-bottom: 8px;
     color: gray;

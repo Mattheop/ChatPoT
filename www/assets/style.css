@@ -194,6 +194,7 @@ a {
 }
 
 .message {
+    align-self: flex-start;
     padding: 1rem;
     max-width: 60%;
     min-width: max(20%, 200px);

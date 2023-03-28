@@ -1,7 +1,7 @@
 <?php
 require_once '../src/Database.php';
 session_start();
-$pass_failed = false;
+$passFailed = false;
 
 if (isset($_GET['logout'])) {
     session_destroy();
@@ -40,7 +40,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
     } else {
         // Sinon on vérifie le mot de passe
         if (!password_verify($_POST['pass'], $userFind['password'])) {
-            $pass_failed = true;
+            $passFailed = true;
         } else {
             // On enregistre l'utilisateur en session
             $_SESSION['user'] = $userFind;
@@ -84,7 +84,7 @@ if (!empty($_POST['user']) && !empty($_POST['pass'])) {
             <p>Si votre compte n'existe pas il sera automatiquement créé, n'oubliez pas votre mot de passe.</p>
         </div>
 
-        <?php if ($pass_failed): ?>
+        <?php if ($passFailed): ?>
             <div class="notice notice-danger">
                 <i class="las la-exclamation-circle"></i>
                 <p>Le mot de passe est incorrect.</p>

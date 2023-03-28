@@ -8,8 +8,8 @@ if (empty($_SESSION['user'])) {
 }
 
 $pdo = Database::getInstance()->getPDO();
-$update_me = $pdo->prepare("UPDATE users SET last_alive = NOW() WHERE username = :username");
-$update_me->execute(['username' => $_SESSION['user']['username']]);
+$updateMe = $pdo->prepare("UPDATE users SET last_alive = NOW() WHERE username = :username");
+$updateMe->execute(['username' => $_SESSION['user']['username']]);
 
 $usersAlive = $pdo->query("SELECT username FROM users WHERE last_alive > NOW() - INTERVAL 15 SECOND")->fetchAll(PDO::FETCH_FUNC, function ($username) {
     return [
